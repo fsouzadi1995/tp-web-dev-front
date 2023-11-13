@@ -9,6 +9,20 @@ async function getOutfits(isAuthed) {
   ]);
 }
 
+const renderOutfit = (outfit) => (
+  <li key={outfit.id}>
+    <div className='flex justify-around'>
+      <img src={`./${outfit.character.name}.png`} className='h-16 w-20' />
+      <img src={`./${outfit.top.name}.png`} className='h-16 w-20' />
+      <img src={`./${outfit.bottom.name}.png`} className='h-16 w-20' />
+      <img src={`./${outfit.shoe.name}.png`} className='h-16 w-20' />
+    </div>
+    <pre className='mt-6 max-w-lg font-mono'>
+      {JSON.stringify(outfit, null, '\t')}
+    </pre>
+  </li>
+);
+
 function History() {
   const { isAuthed } = React.useContext(AuthContext);
   const [outfits, setOutfits] = React.useState([[], []]);
@@ -23,30 +37,8 @@ function History() {
       {publicOutfits.length && (
         <div>
           <h2 className='text-xl'>Public history</h2>
-
           <ul className='mt-20 flex flex-col gap-y-10 mx-auto list-decimal'>
-            {publicOutfits.map((outfit) => (
-              <li key={outfit.id}>
-                <div className='flex justify-around'>
-                  <img
-                    src={`./${outfit.character.name}.png`}
-                    className='h-16 w-20'
-                  />
-                  <img src={`./${outfit.top.name}.png`} className='h-16 w-20' />
-                  <img
-                    src={`./${outfit.bottom.name}.png`}
-                    className='h-16 w-20'
-                  />
-                  <img
-                    src={`./${outfit.shoe.name}.png`}
-                    className='h-16 w-20'
-                  />
-                </div>
-                <pre className='mt-6 max-w-lg font-mono'>
-                  {JSON.stringify(outfit, null, '\t')}
-                </pre>
-              </li>
-            ))}
+            {publicOutfits.map(renderOutfit)}
           </ul>
         </div>
       )}
@@ -54,30 +46,8 @@ function History() {
       {isAuthed && privateOutfits.length ? (
         <div>
           <h2 className='text-xl'>Private history</h2>
-
-          <ul className='mt-20 flex flex-col gap-y-10 justify-center mx-auto list-decimal'>
-            {privateOutfits.map((outfit) => (
-              <li key={outfit.id}>
-                <div className='flex justify-around'>
-                  <img
-                    src={`./${outfit.character.name}.png`}
-                    className='h-16 w-20'
-                  />
-                  <img src={`./${outfit.top.name}.png`} className='h-16 w-20' />
-                  <img
-                    src={`./${outfit.bottom.name}.png`}
-                    className='h-16 w-20'
-                  />
-                  <img
-                    src={`./${outfit.shoe.name}.png`}
-                    className='h-16 w-20'
-                  />
-                </div>
-                <pre className='mt-6 max-w-lg font-mono'>
-                  {JSON.stringify(outfit, null, '\t')}
-                </pre>
-              </li>
-            ))}
+          <ul className='mt-20 flex flex-col gap-y-10 mx-auto list-decimal'>
+            {privateOutfits.map(renderOutfit)}
           </ul>
         </div>
       ) : null}
