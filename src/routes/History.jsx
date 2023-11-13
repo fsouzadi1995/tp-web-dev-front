@@ -20,7 +20,7 @@ function History() {
 
   return (
     <section className='my-20 flex justify-evenly'>
-      {publicOutfits && (
+      {publicOutfits.length && (
         <div>
           <h2 className='text-xl'>Public history</h2>
 
