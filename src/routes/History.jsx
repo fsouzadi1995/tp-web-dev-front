@@ -3,9 +3,9 @@ import { axios } from '../lib/axios';
 import { AuthContext } from '../providers/AuthContext';
 
 async function getOutfits(isAuthed) {
-  return Promise.all([
-    await axios.get('/outfit/history'),
-    isAuthed ? await axios.get(`/outfit/private_history`) : [],
+  return await Promise.all([
+    axios.get('/outfit/history'),
+    isAuthed ? axios.get(`/outfit/private_history`) : [],
   ]);
 }
 
@@ -34,7 +34,7 @@ function History() {
 
   return (
     <section className='my-20 flex justify-evenly'>
-      {publicOutfits.length && (
+      {publicOutfits.length > 0 && (
         <div>
           <h2 className='text-xl'>Public history</h2>
           <ul className='mt-20 flex flex-col gap-y-10 mx-auto list-decimal'>
@@ -43,7 +43,7 @@ function History() {
         </div>
       )}
 
-      {isAuthed && privateOutfits.length ? (
+      {isAuthed && privateOutfits.length > 0 ? (
         <div>
           <h2 className='text-xl'>Private history</h2>
           <ul className='mt-20 flex flex-col gap-y-10 mx-auto list-decimal'>
